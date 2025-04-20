@@ -1,0 +1,4 @@
+name = "DynamicProgrammingUtils"
+uuid = "df055df3-044f-499e-81ac-ea5ec7444157"
+authors = ["Hermilo Cortes <hermilocg@hotmail.com>"]
+version = "0.1.0"
