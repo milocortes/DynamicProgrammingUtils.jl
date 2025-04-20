@@ -153,13 +153,16 @@ function simulate_AR(pi, shocks)
     return shocks
 end 
 
+
+FORTRAN_WRAPPERS_FILE_PATH = joinpath(@__DIR__, "fortran_wrappers", "mod_julfort.so")
+
 ###############################################################################
 # SUBROUTINE grid_Cons_Grow
 #
 # Constructs a growing grid on [left, right].
 ###############################################################################
 function grid_Cons_Grow(a, n, left, right, growth)
-    ccall((:grid_Cons_Grow, "./fortran_wrappers/mod_julfort.so"),
+    ccall((:grid_Cons_Grow, FORTRAN_WRAPPERS_FILE_PATH),
                 Cvoid,
                 (Ptr{Float64},Ref{Int64},Ref{Float64}, Ref{Float64}, Ref{Float64}),
                 a, n,  left, right,growth)
@@ -172,7 +175,7 @@ end
 ###############################################################################
 function linint_Grow(x, left, right, growth, n, il, ir, phi)
 
-    ccall((:linint_Grow, "./fortran_wrappers/mod_julfort.so"),
+    ccall((:linint_Grow, FORTRAN_WRAPPERS_FILE_PATH),
             Cvoid,
             (Ref{Float64}, Ref{Float64}, Ref{Float64}, Ref{Float64}, Ref{Int64}, Ptr{Int64}, Ptr{Int64}, Ptr{Float64} ),
             x, left, right, growth, n, il, ir, phi)
@@ -186,7 +189,7 @@ end
 # Constructs a whole equidistant grid on [left,right].
 ###############################################################################
 function grid_Cons_Equi(a, n, left, right)
-    ccall((:grid_Cons_Equi, "./fortran_wrappers/mod_julfort.so"),
+    ccall((:grid_Cons_Equi, FORTRAN_WRAPPERS_FILE_PATH),
                 Cvoid,
                 (Ptr{Float64},Ref{Int64},Ref{Float64}, Ref{Float64}),
                 a, n,  left, right)
@@ -206,7 +209,7 @@ end
 ###############################################################################
 
 function normal_discrete(x, prob, n_size, mu, sigma)
-    ccall((:normal_discrete, "./fortran_wrappers/mod_julfort.so"),
+    ccall((:normal_discrete, FORTRAN_WRAPPERS_FILE_PATH),
                 Cvoid,
                 (Ptr{Float64},Ptr{Float64}, Ref{Int64},Ref{Float64}, Ref{Float64}),
                 x, prob, n_size, mu, sigma)
